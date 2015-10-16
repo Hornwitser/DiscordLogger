@@ -1,0 +1,5 @@
+# Database connection parameters for the web app.
+SetEnv DB_HOST "localhost"
+SetEnv DB_USER "web"
+SetEnv DB_PASSWORD "Web password"
+SetEnv DB_SCHEMA "discord"

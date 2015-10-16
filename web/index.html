@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Discord WebSocket Log</title>
+
+        <!-- At least it's better than unstyled HTML... -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+        <style>
+            @media (min-width: 768px) {
+                #query-box {
+                    width: calc(100% - 12em);
+                }
+                #query-box > input {
+                    width: 100%;
+                }
+
+                #query-button {
+                    width: 11em;
+                }
+
+                form {
+                    margin-bottom: 2em;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container-fluid">
+            <h1>Discord WebSocket Log</h1>
+            <p>A simple discord WebSocket message log, for API debugging and reference purpose.
+
+            <form class="form-inline" method="GET" action="query" accept-charset="UTF-8">
+                <div class="form-group" id="query-box">
+                    <input type="text" class="form-control" name="query" placeholder="SELECT * FROM message">
+                </div>
+                <button type="submit" id="query-button" class="btn btn-default">Run MySQL Query</button>
+            </form>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Database Schema</h3>
+                </div>
+                <div class="panel-body">
+                    <p>There's a single table available called "message" with the following colums:
+                    <table class="table">
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Description</th>
+                        </tr>
+                        <tr>
+                            <td>id</td>
+                            <td>INT KEY</td>
+                            <td>Unique record id.</td>
+                        </tr>
+                        <tr>
+                            <td>dir</td>
+                            <td>TINYINT NOT NULL</td>
+                            <td>Direction of communication. 0=received, 1=sent.</td>
+                        </tr>
+                        <tr>
+                            <td>time</td>
+                            <td>TIMESTAMP NOT NULL</td>
+                            <td>The time the record was received by the client.</td>
+                        </tr>
+                        <tr>
+                            <td>op</td>
+                            <td>INT</td>
+                            <td>Value of the "op" property when available.</td>
+                        </tr>
+                        <tr>
+                            <td>s</td>
+                            <td>INT</td>
+                            <td>Value of the "s" property when available.</td>
+                        </tr>
+                        <tr>
+                            <td>t</td>
+                            <td>VARCHAR(255)</td>
+                            <td>Value of the "t" property when available.</td>
+                        </tr>
+                        <tr>
+                            <td>raw</td>
+                            <td>TEXT</td>
+                            <td>Raw JSON string received/sent on the WebSocket.</td>
+                        </tr>
+                    </table>
+                    <p>Result columns with the name "raw" or "dir" is treated specially when
+                    displayed.  The "raw" column is decoded as JSON, and encoded again with indents
+                    for readability before being rendered in a &lt;pre&gt; tag, and the "dir"
+                    column has values of 0 replaced with "Receive" and values of 1 replaced with
+                    "Send".
+                </div>
+            </div>
+        </div>
+    </body>
+</head>
