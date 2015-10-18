@@ -61,7 +61,7 @@ $mysqli->close();
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Discord WebSocket Log</title>
+        <title>Query Results</title>
 
         <!-- At least it's better than unstyled HTML... -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -70,9 +70,22 @@ $mysqli->close();
         <link rel="stylesheet" href="style">
     </head>
     <body>
-        <div class="container-fluid">
-            <h1>Discord WebSocket Log</h1>
-            <p>A simple discord WebSocket message log, for API debugging and reference purpose.
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href=".">Discord WebSocket Log</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href=".">Overview</a></li>
+                    <li class="active"><a href="query">Query Database</a></li>
+                    <li><a href="analysis">Analysis</a></li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+            <h3>Query Results</h3>
 
             <form class="form-inline" method="GET" action="query" accept-charset="UTF-8">
                 <div class="form-group" id="query-box">
@@ -94,6 +107,8 @@ if ($error !== false) { ?>
             </div>
 <?php
 } else { ?>
+        </div>
+        <div class="container-fluid">
             <table class="table">
                 <tr>
 <?php

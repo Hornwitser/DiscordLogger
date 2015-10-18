@@ -72,7 +72,7 @@ header = """<!DOCTYPE html>
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Discord WebSocket Log</title>
+        <title>WebSocket Analysis</title>
 
         <!-- At least it's better than unstyled HTML... -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
@@ -82,8 +82,21 @@ header = """<!DOCTYPE html>
         <link rel="stylesheet" href="style">
     </head>
     <body>
-        <div class="container-fluid">
-            <h1>Discord WebSocket Analysis</h1>
+        <nav class="navbar navbar-default">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href=".">Discord WebSocket Log</a>
+                </div>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href=".">Overview</a></li>
+                    <li><a href="query">Query Database</a></li>
+                    <li class="active"><a href="analysis">Analysis</a></li>
+                </ul>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
             <p>An analysis of the messages on the discord WebSocket, for API debugging and reference purpose.
 """
 
