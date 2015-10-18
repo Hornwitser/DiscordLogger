@@ -68,6 +68,10 @@ form {
     white-space: pre;
 }
 
+.infoline:hover {
+    background-color: #eaeaea;
+}
+
 .infobox {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     white-space: normal;
