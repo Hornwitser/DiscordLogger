@@ -79,68 +79,7 @@ header = """<!DOCTYPE html>
         <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-        <style>
-            @media (min-width: 768px) {
-                #query-box {
-                    width: calc(100% - 12em);
-                }
-                #query-box > input {
-                    width: 100%;
-                }
-
-                #query-button {
-                    width: 11em;
-                }
-
-                form {
-                    margin-bottom: 2em;
-                }
-            }
-
-            .string {
-                color: #d9534f;
-            }
-
-            .key, .number {
-                color: #5cb85c;
-            }
-
-            .int {
-                color: #337ab7;
-            }
-
-            .bool, .null {
-                color: #337ab7;
-                font-weight: bold;
-            }
-
-            .type-or {
-                font: serif;
-                font-style: italic;
-            }
-
-            .infoline {
-                white-space: pre;
-            }
-
-            .infobox {
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-                white-space: normal;
-            }
-
-            .infoblock {
-                white-space: normal;
-            }
-
-            .label {
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-                padding: 0 0.3em;
-            }
-
-            .label-default {
-                background-color: #aaa;
-            }
-        </style>
+        <link rel="stylesheet" href="style">
     </head>
     <body>
         <div class="container-fluid">

@@ -55,29 +55,7 @@ $mysqli->close();
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
-        <style>
-            @media (min-width: 768px) {
-                #query-box {
-                    width: calc(100% - 12em);
-                }
-                #query-box > input {
-                    width: 100%;
-                }
-
-                #query-button {
-                    width: 11em;
-                }
-
-                form {
-                    margin-bottom: 2em;
-                }
-
-                .null {
-                    color: #AAA;
-                    font-style: italic;
-                }
-            }
-        </style>
+        <link rel="stylesheet" href="style">
     </head>
     <body>
         <div class="container-fluid">
@@ -114,7 +92,7 @@ if ($error !== false) { ?>
         foreach ($fields as $field) {
             $value = $row[$field["index"]];
             if ($value === null) { ?>
-                    <td class="null">NULL</td>
+                    <td class="sql-null">NULL</td>
 <?php
             } else if ($field["name"] === "raw") {
                 $decoded = json_decode($value);
