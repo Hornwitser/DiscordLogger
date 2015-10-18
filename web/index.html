@@ -17,7 +17,8 @@
 
             <form class="form-inline" method="GET" action="query" accept-charset="UTF-8">
                 <div class="form-group" id="query-box">
-                    <input type="text" class="form-control" name="query" placeholder="SELECT * FROM message">
+                    <input type="text" class="form-control" name="query"
+                           placeholder="SELECT t, COUNT(*) FROM message GROUP BY t ORDER BY t">
                 </div>
                 <button type="submit" id="query-button" class="btn btn-default">Run MySQL Query</button>
             </form>

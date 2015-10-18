@@ -18,7 +18,7 @@ if ($mysqli->connect_errno) {
 }
 
 if (!array_key_exists('query', $_GET)) {
-    $query = "SELECT dir, op, t, s FROM message WHERE op != 1";
+    $query = "SELECT t, COUNT(*) FROM message GROUP BY t ORDER BY t";
 } else {
     $query = $_GET['query'];
 }
