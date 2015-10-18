@@ -17,7 +17,7 @@ if ($mysqli->connect_errno) {
     die();
 }
 
-if (!array_key_exists('query', $_GET)) {
+if (!array_key_exists('query', $_GET) || $_GET['query'] === '') {
     $query = "SELECT t, COUNT(*) FROM message GROUP BY t ORDER BY t";
 } else {
     $query = $_GET['query'];
@@ -25,9 +25,7 @@ if (!array_key_exists('query', $_GET)) {
 
 $fields = array();
 $error = false;
-if ($query === '') {
-    $error = "Please provide a query.";
-} else if ($res = $mysqli->query($query)) {
+if ($res = $mysqli->query($query)) {
     $fno = 0;
     while ($finfo = $res->fetch_field()) {
         $fields[] = array(
