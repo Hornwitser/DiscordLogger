@@ -12,7 +12,7 @@ $schema = $_SERVER['DB_SCHEMA'];
 $mysqli = new mysqli($host, $user, $password, $schema);
 if ($mysqli->connect_errno) {
     header("HTTP/1.0 500 Internal Server Error");
-    echo("500 Internal Server Error\n")
+    echo("500 Internal Server Error\n");
     echo("Failed to connect to database: ".$mysqli->connect_error);
     die();
 }
