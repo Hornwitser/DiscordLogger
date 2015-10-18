@@ -25,7 +25,7 @@ if (!array_key_exists('query', $_GET) || $_GET['query'] === '') {
 
 $fields = array();
 $error = false;
-if ($res = $mysqli->query($query)) {
+if ($res = $mysqli->query($query, MYSQLI_USE_RESULT)) {
     $fno = 0;
     while ($finfo = $res->fetch_field()) {
         $fields[] = array(
@@ -35,7 +35,21 @@ if ($res = $mysqli->query($query)) {
         );
     }
 
-    $dataset = $res->fetch_all();
+    $rows_fetched = 0;
+    while ($rows_fetched < 1000) {
+        if (($row = $res->fetch_row()) !== null) {
+            $dataset[] = $row;
+            $rows_fetched++;
+        } else {
+            break;
+        }
+    }
+
+    if ($rows_fetched === 0) {
+        $error = "Query returned an empty set of results.";
+    }
+
+    $result_limited = $rows_fetched === 1000 && $res->fetch_row() !== null;
 } else {
     $error = $mysqli->error;
 }
@@ -67,6 +81,12 @@ $mysqli->close();
                 <button type="submit" id="query-button" class="btn btn-default">Run MySQL Query</button>
             </form>
 <?php
+if ($result_limited) { ?>
+            <div class="alert alert-info">
+                <strong>Note:</strong> Only the first 1000 results of the query is shown.
+            </div>
+<?php
+}
 
 if ($error !== false) { ?>
             <div class="alert alert-danger">
