@@ -8,10 +8,17 @@ import pymysql
 
 def partition(direction, data):
     if direction == 0: # client receive
-        if 't' in data:
-            return data['t']
+        if 't' in data and data['t'] is not None:
+            if data['t'].startswith('CHANNEL') and data['d']['is_private']:
+                return '{} {}'.format(data['t'], '(private)')
+            elif data['t'] == 'GUILD_DELETE' and data['d'].get('unavailable'):
+                return '{} {}'.format(data['t'], '(unavailable)')
+            elif data['t'] == 'MESSAGE_UPDATE' and 'content' not in data['d']:
+                return '{} {}'.format(data['t'], '(embeds only)')
+            else:
+                return data['t']
         else:
-            return data['op']
+            return 'OP {}'.format(data['op'])
     else:
         return None
 
