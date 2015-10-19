@@ -53,7 +53,7 @@ class LoggerBot(discord.Client):
 
 if __name__ == '__main__':
     global connection
-    config = eval(open('config').read())
+    config = eval(open('config.py').read())
     logging.basicConfig(level=logging.INFO)
     connection = pymysql.connect(host=config['db_host'],
                                  user=config['db_user'],
