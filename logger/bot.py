@@ -6,6 +6,10 @@ import pymysql
 
 
 class LoggerBot(discord.Client):
+    def __init__(self, config):
+        Client.__init__(self)
+        self.config = config
+
     def on_socket_raw_send(self, msg):
         self.log_msg(True, msg)
 
@@ -51,6 +55,13 @@ class LoggerBot(discord.Client):
 
         connection.commit()
 
+
+def write_config(config):
+    config_file = open('config.py', 'w')
+    lines = ['    {!r}: {!r},'.format(k, config[k]) for k in sorted(config)]
+    config_file.write('\n'.join(['# LoggerBot config', '{']+lines+['}']))
+    config_file.close()
+
 if __name__ == '__main__':
     global connection
     config = eval(open('config.py').read())
@@ -62,6 +73,9 @@ if __name__ == '__main__':
                                  charset='utf8mb4',
                                  cursorclass=pymysql.cursors.DictCursor)
 
-    bot = LoggerBot()
+    bot = LoggerBot(config)
     bot.login(config['bot_user'], config['bot_password'])
-    bot.run()
+    try:
+        bot.run()
+    finally:
+        write_config(config)
