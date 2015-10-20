@@ -10,7 +10,7 @@ class LoggerBot(discord.Client):
         Client.__init__(self)
         self.config = config
 
-    def on_socket_raw_send(self, msg):
+    def on_socket_raw_send(self, msg, binary):
         self.log_msg(True, msg)
 
     def on_socket_raw_receive(self, msg):
