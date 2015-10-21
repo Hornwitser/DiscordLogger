@@ -112,8 +112,8 @@ header = """<!DOCTYPE html>
 
 footer = """        </div>
         <script>
-            jQuery(".infoline").click(function() {
-                jQuery(this).find('.infobox').slideToggle();
+            jQuery(".expandline").click(function() {
+                jQuery(this).parent().find('.infobox').slideToggle();
             });
         </script>
     </body>
@@ -231,7 +231,9 @@ def output_node(lines):
                 raise ValueError('unhandled dual object, noed in output_node')
             else:
                 print('<div class="infoline">'
-                          '{}<span class="key">"{}"</span>: {{{}'
+                          '<div class="expandline">'
+                              '{}<span class="key">"{}"</span>: {{{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
@@ -247,7 +249,9 @@ def output_node(lines):
                 raise ValueError('unhandled dual array object in output_node')
             else:
                 print('<div class="infoline">'
-                          '{}<span class="key">"{}"</span>: [{}'
+                          '<div class="expandline">'
+                              '{}<span class="key">"{}"</span>: [{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
@@ -257,7 +261,9 @@ def output_node(lines):
             print('<div class="infoline">{}]</div>'.format(indent))
         elif t == 'prop_array_alt':
             print('<div class="infoline">{}    '
-                      '<span class="type-or">or</span>'
+                      '<div class="expandline">'
+                          '<span class="type-or">or</span>'
+                      '</div>'
                   '</div>'.format(indent))
         elif t == 'prop_empty_array':
             data = line['data']
@@ -268,7 +274,9 @@ def output_node(lines):
                 raise ValueError('unhandled dual array object in output_node')
             else:
                 print('<div class="infoline">'
-                          '{}<span class="key">"{}"</span>: []{}'
+                          '<div class="expandline">'
+                              '{}<span class="key">"{}"</span>: []{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
@@ -280,7 +288,9 @@ def output_node(lines):
             if len(data['values']) == 1:
                 value = next(iter(data['values'].keys()))
                 print('<div class="infoline">'
-                          '{}{}{}'
+                          '<div class="expandline">'
+                              '{}{}{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
@@ -288,7 +298,9 @@ def output_node(lines):
                                       box))
             else:
                 print('<div class="infoline">'
-                          '{}{}{}'
+                          '<div class="expandline">'
+                              '{}{}{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
@@ -302,7 +314,9 @@ def output_node(lines):
             if len(data['values']) == 1:
                 value = next(iter(data['values'].keys()))
                 print('<div class="infoline">'
-                          '{}<span class="key">"{}"</span>: {}{}'
+                          '<div class="expandline">'
+                              '{}<span class="key">"{}"</span>: {}{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
@@ -310,7 +324,9 @@ def output_node(lines):
                                       box))
             else:
                 print('<div class="infoline">'
-                          '{}<span class="key">"{}"</span>: {}{}'
+                          '<div class="expandline">'
+                              '{}<span class="key">"{}"</span>: {}{}'
+                          '</div>'
                           '<div class="panel panel-default infobox" style="display: none;">'
                               '{}'
                           '</div>'
