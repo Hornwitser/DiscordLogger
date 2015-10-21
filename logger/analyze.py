@@ -418,27 +418,48 @@ class SetEncoder(json.JSONEncoder):
 def defaultdict_factory():
     return collections.defaultdict(defaultdict_factory)
 
+
 if __name__ == '__main__':
-    global connection
-    config = eval(open('config.py').read())
-    logging.basicConfig(level=logging.INFO)
-    connection = pymysql.connect(host=config['db_host'],
-                                 user=config['db_user'],
-                                 password=config['db_password'],
-                                 db=config['db_schema'],
-                                 charset='utf8mb4',
-                                 cursorclass=pymysql.cursors.DictCursor)
+    import sys
+    import pickle
 
-    with connection.cursor() as cursor:
-        sql = "SELECT id, dir, raw FROM message"
-        cursor.execute(sql)
+    if len(sys.argv) < 3:
+        print("Usage: {0} prepare {{file}} [WHERE clause] \n"
+              "  or:  {0} render {{file}}".format(sys.argv[0]))
 
+    elif sys.argv[1] == 'prepare':
+        result_file = open(sys.argv[2], 'wb')
+        config = eval(open('config.py').read())
+        logging.basicConfig(level=logging.INFO)
+        connection = pymysql.connect(host=config['db_host'],
+                                     user=config['db_user'],
+                                     password=config['db_password'],
+                                     db=config['db_schema'],
+                                     charset='utf8mb4',
+                                     cursorclass=pymysql.cursors.DictCursor)
+
+        where = ' '.join(sys.argv[3:]) if len(sys.argv) > 3 else 'TRUE'
+        sql = "SELECT id, dir, raw FROM message WHERE {}".format(where)
         result = defaultdict_factory()
 
-        while True:
-            row = cursor.fetchone()
-            if row is None:
-                break
-            analyze(row, result)
+        with connection.cursor() as cursor:
+            cursor.execute(sql)
 
+            while True:
+                row = cursor.fetchone()
+                if row is None:
+                    break
+                analyze(row, result)
+
+        pickle.dump(result, result_file)
+        result_file.close()
+
+    elif sys.argv[1] == 'render':
+        result_file = open(sys.argv[2], 'rb')
+        result = pickle.load(result_file)
+        result_file.close()
         post_analyze(result)
+
+    else:
+        print("Uknown operation {}".format(sys.argv[1]))
+        exit(1)
