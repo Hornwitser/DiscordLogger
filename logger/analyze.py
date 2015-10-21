@@ -171,14 +171,16 @@ def flatten_prop(node, top_count, name=None, indent=''):
         if name is None:
             lines = [{'line_type': 'obj_start', 'indent': indent,
                       'data': data}]
-            for sub_name, sub_node in node['nodes'].items():
+            for sub_name in sorted(node['nodes']):
+                sub_node = node['nodes'][sub_name]
                 lines.extend(flatten_prop(sub_node, node['count'], sub_name,
                                           sub_indent))
             lines.append({'line_type': 'obj_end', 'indent': indent})
         else:
             lines.append({'line_type': 'prop_obj_start', 'name': name,
                           'data': data, 'indent': indent})
-            for sub_name, sub_node in node['nodes'].items():
+            for sub_name in sorted(node['nodes']):
+                sub_node = node['nodes'][sub_name]
                 lines.extend(flatten_prop(sub_node, node['count'], sub_name,
                                           sub_indent))
             lines.append({'line_type': 'prop_obj_end', 'indent': indent})
