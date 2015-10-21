@@ -35,7 +35,7 @@ def analyze(row, result):
 
     sub_analyze(result[part], d)
 
-def sub_analyze(node, leaf):
+def sub_analyze(node, leaf, snoflake=False):
     node['count'] = node.get('count', 0) + 1
 
     t = type(leaf).__name__
@@ -43,11 +43,14 @@ def sub_analyze(node, leaf):
 
     if t == 'dict':
         for k, v in leaf.items():
-            sub_analyze(node['nodes'][k], v)
+            sub_analyze(node['nodes'][k], v, k=='guilds')
     elif t == 'list':
         for v in leaf:
             node['leaf_count'] = node.get('leaf_count', 0) + 1
-            sub_analyze(node['leafs'], v)
+            if snoflake and v.get('unavailable'):
+                sub_analyze(node['snowflake_leafs'], v)
+            else:
+                sub_analyze(node['leafs'], v)
     elif t == 'str':
         if 'charset' in node:
             node['charset'].update(list(leaf))
@@ -181,7 +184,16 @@ def flatten_prop(node, top_count, name=None, indent=''):
             lines.append({'line_type': 'prop_obj_end', 'indent': indent})
 
     elif is_array:
-        if 'leafs' in node:
+        if 'snowflake_leafs' in node:
+            lines.append({'line_type': 'prop_array_start', 'name': name,
+                          'data': data, 'indent': indent})
+            lines.extend(flatten_prop(node['snowflake_leafs'],
+                         node['leaf_count'], None, sub_indent))
+            lines.append({'line_type': 'prop_array_alt', 'indent': indent})
+            lines.extend(flatten_prop(node['leafs'], node['leaf_count'], None,
+                         sub_indent))
+            lines.append({'line_type': 'prop_array_end', 'indent': indent})
+        elif 'leafs' in node:
             lines.append({'line_type': 'prop_array_start', 'name': name,
                           'data': data, 'indent': indent})
             lines.extend(flatten_prop(node['leafs'], node['leaf_count'], None,
@@ -241,6 +253,10 @@ def output_node(lines):
         elif t == 'prop_array_end':
             print('<div class="infoline">{}    ...</div>'.format(indent))
             print('<div class="infoline">{}]</div>'.format(indent))
+        elif t == 'prop_array_alt':
+            print('<div class="infoline">{}    '
+                      '<span class="type-or">or</span>'
+                  '</div>'.format(indent))
         elif t == 'prop_empty_array':
             data = line['data']
             box = infobox(data)
