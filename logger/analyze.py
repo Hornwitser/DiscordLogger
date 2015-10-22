@@ -234,9 +234,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}<span class="key">"{}"</span>: {{{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, name, tags, box))
         elif t == 'prop_obj_end':
             print('<div class="infoline">{}}}</div>'.format(indent))
@@ -252,9 +250,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}<span class="key">"{}"</span>: [{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, name, tags, box))
         elif t == 'prop_array_end':
             print('<div class="infoline">{}    ...</div>'.format(indent))
@@ -275,9 +271,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}<span class="key">"{}"</span>: []{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, name, tags, box))
         elif t == 'value':
             data = line['data']
@@ -289,9 +283,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}{}{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, json_value(value), tags,
                                       box))
             else:
@@ -299,9 +291,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}{}{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, json_types(data['types']),
                                       tags, box))
         elif t == 'prop':
@@ -315,9 +305,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}<span class="key">"{}"</span>: {}{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, name, json_value(value), tags,
                                       box))
             else:
@@ -325,9 +313,7 @@ def output_node(lines):
                           '<div class="expandline">'
                               '{}<span class="key">"{}"</span>: {}{}'
                           '</div>'
-                          '<div class="panel panel-default infobox" style="display: none;">'
-                              '{}'
-                          '</div>'
+                          '{}'
                       '</div>'.format(indent, name, json_types(data['types']),
                                       tags, box))
         else:
@@ -420,7 +406,9 @@ def infobox(data):
         sections.append(("Sample Values", section))
 
     sections = ''.join(['<h4>{}</h4>{}'.format(t, s) for t, s in sections])
-    return '<div class="panel-body">{}</div>'.format(sections)
+    return ('<div class="panel panel-default infobox" style="display: none;">'
+                '<div class="panel-body">{}</div>'
+            '</div>'.format(sections))
 
 class SetEncoder(json.JSONEncoder):
     def default(self, obj):
