@@ -260,10 +260,8 @@ def output_node(lines):
             print('<div class="infoline">{}    ...</div>'.format(indent))
             print('<div class="infoline">{}]</div>'.format(indent))
         elif t == 'prop_array_alt':
-            print('<div class="infoline">{}    '
-                      '<div class="expandline">'
-                          '<span class="type-or">or</span>'
-                      '</div>'
+            print('<div class="infoline">'
+                      '{}    <span class="type-or">or</span>'
                   '</div>'.format(indent))
         elif t == 'prop_empty_array':
             data = line['data']
