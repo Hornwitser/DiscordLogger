@@ -23,6 +23,6 @@ Configuration
 -------------
 
 See [db/schema.sql](db/schema.sql) for a description of the database setup,
-[logger/config-example](logger/config-example) for the configuration of the
-Discord bot and the analysis program, and finally
+[logger/config-example.py](logger/config-example.py) for the configuration of
+the Discord bot and the analysis program, and finally
 [web/.htaccess-example](web/.htaccess-example) for the web application.
