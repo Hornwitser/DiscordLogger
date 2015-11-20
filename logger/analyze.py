@@ -78,50 +78,8 @@ def sub_analyze(node, leaf, snoflake=False):
     else:
         raise ValueError("Unknown type %" % t)
 
-header = """<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>WebSocket Analysis</title>
-
-        <!-- At least it's better than unstyled HTML... -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-        <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-
-        <link rel="stylesheet" href="style">
-    </head>
-    <body>
-        <nav class="navbar navbar-default">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href=".">Discord WebSocket Log</a>
-                </div>
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a href=".">Overview</a></li>
-                    <li><a href="query">Query Database</a></li>
-                    <li class="active"><a href="analysis">Analysis</a></li>
-                </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="container">
-            <p>An analysis of the messages on the discord WebSocket, for API debugging and reference purpose.
-"""
-
-footer = """        </div>
-        <script>
-            jQuery(".expandline").click(function() {
-                jQuery(this).parent().find('.infobox').slideToggle();
-            });
-        </script>
-    </body>
-</head>
-"""
-
 def post_analyze(result):
-    print(header)
+    print(open('header.html').read(), end='')
 
     indent = '    '*3
     print('{}<h2>Partitions</h2>'.format(indent))
@@ -150,7 +108,7 @@ def post_analyze(result):
         print('{dt}    </div>\n'
               '{dt}</div>'.format(dt=indent))
 
-    print(footer)
+    print(open('footer.html').read(), end='')
 
 def flatten_prop(node, top_count, name=None, indent=''):
     if len(node) == 0:
